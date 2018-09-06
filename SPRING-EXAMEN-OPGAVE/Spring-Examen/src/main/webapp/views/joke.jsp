@@ -11,7 +11,10 @@
     <title>Jokes</title>
 </head>
 <body>
+<form action="/joke_post">
 <p>Voornaam</p><input type="text" name="voornaam" id="voornaam"/></br>
 <p>Achternaam</p><input type="text" name="naam" id="naam"/>
+    <input type="submit" />
+</form>
 </body>
 </html>
