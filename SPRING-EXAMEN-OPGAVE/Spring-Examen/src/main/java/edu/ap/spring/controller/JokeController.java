@@ -1,6 +1,7 @@
 package edu.ap.spring.controller;
 
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import edu.ap.spring.jpa.*;
 
 @Controller
 @Scope("session")
@@ -20,6 +22,9 @@ public class JokeController {
    
    public JokeController() {
    }
+
+    @Autowired
+    JokeRepository repository;
        
    @RequestMapping("/joke")
    public String joke() {
@@ -58,6 +63,7 @@ public class JokeController {
            JSONObject jsonValue = (JSONObject) parser.parse(jsonData.get("value").toString());
            String joke = jsonValue.get("joke").toString();
            model.addAttribute("joke", joke);
+           repository.save(new Joke(joke));
 
 
            conn.disconnect();
@@ -73,6 +79,8 @@ public class JokeController {
        } catch (ParseException e) {
            e.printStackTrace();
        }
+
+
        return "joke_post";
 
    }
